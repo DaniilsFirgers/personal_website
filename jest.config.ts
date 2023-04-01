@@ -14,7 +14,7 @@ export default async (): Promise<Config.InitialOptions> => {
       '^@/(.*)$': '<rootDir>/src/$1'
     },
     testMatch: [
-      '<rootDir>/tests/**/*.spec.ts'
+      '<rootDir>/src/**/*.spec.ts'
     ],
     collectCoverageFrom: [
       '<rootDir>/src/**/*.{ts,vue}',
