@@ -11,7 +11,8 @@ export default async (): Promise<Config.InitialOptions> => {
       '^.+\\.ts?$': 'ts-jest'
     },
     moduleNameMapper: {
-      '^@/(.*)$': '<rootDir>/src/$1'
+      '^@/(.*)$': '<rootDir>/src/$1',
+      '\\.(vue)$': 'vue-jest',
     },
     testMatch: [
       '<rootDir>/src/**/*.spec.ts'
