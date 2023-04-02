@@ -12,6 +12,10 @@
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
     "noEmit": true,
+    "vue":{
+      "compiler": "vue-template-compiler",
+      "tsConfigPath": "tsconfig.json"
+    },
     "types": ["vite/client", "@types/jest", "@vue/test-utils", "jest", "vue"],
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
