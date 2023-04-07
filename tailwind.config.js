@@ -5,7 +5,14 @@ export default {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors:{
+        'ubuntu-orange': '#E95420',
+        'dark-aubergine': '#2C001E',
+        'mid-aubergine': '#5E2750',
+        'light-aubergine': '#77216F'
+      }
+    },
   },
   plugins: [],
 }
