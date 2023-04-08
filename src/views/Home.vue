@@ -5,7 +5,7 @@ import LayoutDefault from '../layout/DefaultLayout.vue'
 <template>
     <LayoutDefault>
         <div>
-            <h1>hello</h1>
+
         </div>
     </LayoutDefault>
 </template>
