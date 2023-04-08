@@ -13,7 +13,7 @@ function currentDatetime() {
         currentTime.value = moment().format(timeFormat)
         console.log(currentTime)
     }
-    const updateDatetimeInterval = setInterval(updateCurrentDatetime, 1000)
+    const updateDatetimeInterval = setInterval(updateCurrentDatetime, 60000)
     onBeforeUnmount(()=>{
         clearInterval(updateDatetimeInterval)
     })
