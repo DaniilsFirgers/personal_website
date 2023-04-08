@@ -27,7 +27,7 @@ currentDatetime()
 </script>
 
 
-<template>
+<template >
 <header class="w-full h-6 bg-black flex flex-row justify-center">
 
     <h1 class="text-white">{{ currentTime.toLocaleLowerCase() }}</h1>
