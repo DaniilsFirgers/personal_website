@@ -1,8 +1,13 @@
 <script lang="ts" setup>
 import { ref, onBeforeUnmount } from 'vue'
 import moment from 'moment-timezone'
+import { vOnClickOutside } from '@vueuse/components'
+import { mdiAccount, mdiEmail } from '@mdi/js'
+
 
 const brightnessValue = ref<string>("100")
+const openHeaderSettingsModal = ref<Boolean>(false)
+const powerOff = ref<Boolean>(false)
 const timeFormat: string = 'MMM D HH:mm'
 const currentTime = ref(moment().format(timeFormat))
 
@@ -23,27 +28,44 @@ function currentDatetime() {
 }
 currentDatetime()
 
+function onHandleHeaderModal(){
+    openHeaderSettingsModal.value = !openHeaderSettingsModal.value
+
+}
+
+function onHandlePowerOff(){
+    powerOff.value = true
+}
 
 </script>
 
 
 <template >
-<header class="w-full h-6 bg-black flex flex-row justify-evenly">
-    <v-container></v-container>
+<header class="w-full h-6 bg-black flex flex-row justify-evenly" :class="{'brightness-0': powerOff}">
+    <v-container class="py-0 px-0 flex justify-start"><h1 class="pl-4">Activities</h1> </v-container>
     <v-container class="py-0 px-0 flex justify-center"><h1 class="text-white">{{ currentTime.toLocaleLowerCase() }}</h1></v-container>
-    <v-container class="py-0 px-0 flex justify-center">
-
+    <v-container class="py-0 px-0 flex justify-end">
+        <button @click="onHandleHeaderModal">Open</button>
     </v-container>
 </header>
-<div class="flex flex-row ">
-   <div class="w-20 h-screen bg-dark-aubergine ">
+<div class="flex flex-row">
+   <div class="w-20 h-screen bg-dark-aubergine" :class="{'brightness-0': powerOff}">
     <div class="hover:bg-hover-aubergine rounded-lg m-1">
         <a href="https://github.com/DaniilsFirgers" target="_blank"><img src="/src/assets/github.png" alt="Github logo" class="h-15 w-15 p-1.5"></a>
     </div>
     
 
    </div>
-       <div class="h-screen bg-mid-aubergine w-full">
+       <div class="h-screen bg-mid-aubergine w-full relative" :class="{'brightness-0': powerOff}">
+        <div class="h-80 w-72 bg-header-pop-up rounded-lg absolute top-1.5 right-1.5" v-if="openHeaderSettingsModal" v-on-click-outside="onHandleHeaderModal">
+        
+        <div @click="onHandlePowerOff"> <span class="flex items-center cursor-pointer"> <v-icon
+          end
+          icon="mdi-power"
+        ></v-icon>Power Off/Logout</span>  </div>    
+        
+
+        </div>
         <slot></slot>
     </div>
 </div>     
