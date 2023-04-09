@@ -12,7 +12,11 @@ export default {
         'mid-aubergine': '#5E2750',
         'light-aubergine': '#77216F',
         'hover-aubergine': '#9F6986',
-        'header-pop-up': '#E6E4E2'
+        'header-pop-up': '#E6E4E2',
+        'warm-grey-40': '#DEDBD8',
+        'warm-grey-50': '#D6D3CF',
+        'ubuntu-orange-100': '#E95420',
+        'ubuntu-orange-80': '#ED764D'
       },
       backgroundImage:{
         'jammy-jellyfish': "url('/src/assets/jammy.jpeg')"
