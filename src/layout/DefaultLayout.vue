@@ -89,6 +89,9 @@ function closeSwitchOffModal(){
     <div class="hover:bg-hover-aubergine rounded-lg m-1">
         <a href="https://github.com/DaniilsFirgers" target="_blank"><img src="/src/assets/github.png" alt="Github logo" class="h-15 w-15 p-1.5"></a>
     </div>
+    <div class="hover:bg-hover-aubergine rounded-lg m-1">
+        <a href="https://lv.linkedin.com/in/daniils-firgers-1008881a4" target="_blank"><img src="/src/assets/linkedin.png" alt="LinkedIn logo" class="h-15 w-15 p-1.5"></a>
+    </div>
     
 
    </div> 
