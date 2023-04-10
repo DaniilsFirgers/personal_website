@@ -4,8 +4,6 @@ import LayoutDefault from '../layout/DefaultLayout.vue'
 
 <template>
     <LayoutDefault>
-        <div>
-
-        </div>
+  
     </LayoutDefault>
 </template>
