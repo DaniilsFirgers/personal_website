@@ -2,11 +2,13 @@
 import { ref, onBeforeUnmount } from "vue";
 import moment from "moment-timezone";
 import { OnClickOutside } from "@vueuse/components";
+import terminal from "../components/terminal.vue";
 
 const beforeShutDownSecLimit: number = 10;
 const brightnessValue = ref<string>("100");
 const openHeaderSettingsModal = ref<Boolean>(false);
 const showSwitchOffModal = ref<Boolean>(false);
+const terminalIsOpen = ref<Boolean>(false);
 const powerOff = ref<Boolean>(false);
 const remainingTimeBeforePowerOff = ref<number>(beforeShutDownSecLimit);
 const timeFormat: string = "MMM D HH:mm";
@@ -68,6 +70,10 @@ function closeSwitchOffModal() {
     remainingTimeBeforePowerOff.value = beforeShutDownSecLimit;
   }
 }
+
+function onHandleTerminalIcon() {
+  terminalIsOpen.value = !terminalIsOpen.value;
+}
 </script>
 
 <template>
@@ -128,11 +134,14 @@ function closeSwitchOffModal() {
           ><img
             src="/src/assets/linkedin.png"
             alt="LinkedIn logo"
-            class="h-15 w-15 p-1.5"
-        /></a>
+            class="h-15 w-15 p-1.5" /></a
+        >onHandleTerminalIcon
       </div>
 
-      <div class="hover:bg-hover-aubergine rounded-lg m-1">
+      <div
+        class="hover:bg-hover-aubergine rounded-lg m-1"
+        @click="onHandleTerminalIcon"
+      >
         <img
           src="/src/assets/terminal.png"
           alt="Ubuntu terminal logp"
@@ -187,6 +196,9 @@ function closeSwitchOffModal() {
             </div>
           </div>
         </section>
+      </div>
+      <div v-if="terminalIsOpen">
+        <terminal></terminal>
       </div>
       <slot></slot>
     </div>
