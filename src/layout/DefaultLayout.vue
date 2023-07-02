@@ -16,6 +16,7 @@ const currentTime = ref(moment().format(timeFormat));
 
 const intervalCount = ref(0);
 const intervalId = ref<number | null>(null);
+
 function startSwitchOffInterval() {
   if (!intervalId.value) {
     intervalId.value = setInterval(() => {
@@ -134,17 +135,18 @@ function onHandleTerminalIcon() {
           ><img
             src="/src/assets/linkedin.png"
             alt="LinkedIn logo"
-            class="h-15 w-15 p-1.5" /></a
-        >onHandleTerminalIcon
+            class="h-15 w-15 p-1.5"
+        /></a>
       </div>
 
       <div
+        class:bg-hover-aubergine="{terminalIsOpen}"
         class="hover:bg-hover-aubergine rounded-lg m-1"
         @click="onHandleTerminalIcon"
       >
         <img
           src="/src/assets/terminal.png"
-          alt="Ubuntu terminal logp"
+          alt="Ubuntu terminal logo"
           class="h-15 w-15 p-1.5"
         />
       </div>
