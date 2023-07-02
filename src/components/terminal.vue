@@ -136,6 +136,12 @@ function handleInputActions(action: string) {
     case "cd /about":
       router.push("/about");
       break;
+    case "cd /home":
+      router.push("/");
+      break;
+    case "cd /cd ":
+      router.push("/");
+      break;
   }
 }
 </script>
