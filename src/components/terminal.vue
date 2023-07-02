@@ -33,6 +33,7 @@
 
 <script lang="ts" setup>
 import { Ref, onBeforeUnmount, onMounted, onUnmounted, ref } from "vue";
+import { useRouter } from "vue-router";
 import { useDragStore } from "../stores/drag";
 import { useLocationStore } from "../stores/location";
 import { useCommandsStore } from "../stores/executedCommands";
@@ -40,6 +41,7 @@ import { useCommandsStore } from "../stores/executedCommands";
 const dragStore = useDragStore();
 const locationStore = useLocationStore();
 const commandsStore = useCommandsStore();
+const router = useRouter();
 
 let currentUrl = locationStore.currentURL;
 let dragable: HTMLElement | null;
@@ -66,6 +68,7 @@ function onTerminalInput(event: Event) {
     } else if ((event as KeyboardEvent).key === "Enter") {
       let newInputCommand = customTerminalInput!.value;
       commandsStore.updateExecutedCommands(newInputCommand);
+      handleInputActions(newInputCommand);
     } else {
       inputControl = inputControl + 1;
       (document.querySelector(".blink") as HTMLElement).style.transform =
@@ -127,6 +130,14 @@ onBeforeUnmount(() => {
   });
   customTerminalInput?.blur();
 });
+
+function handleInputActions(action: string) {
+  switch (action) {
+    case "cd /about":
+      router.push("/about");
+      break;
+  }
+}
 </script>
 
 <style scoped>
