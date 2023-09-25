@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import LayoutDefault from '../layout/DefaultLayout.vue'
+import LayoutDefault from "../layout/DefaultLayout.vue";
+import HomeMainInfoVue from "../components/HomeMainInfo.vue";
 </script>
 
 <template>
-    <LayoutDefault>
-  
-    </LayoutDefault>
+  <LayoutDefault>
+    <HomeMainInfoVue></HomeMainInfoVue>
+  </LayoutDefault>
 </template>
