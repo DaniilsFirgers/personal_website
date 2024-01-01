@@ -3,6 +3,10 @@
 # Define variables
 APP_DIR="/home/daniils/website"
 
+# Debugging statements
+echo "Current user: $(whoami)"
+echo "Current directory: $(pwd)"
+
 # Navigate to the Vue.js app directory
 echo "ℹ️ Changing directory to $APP_DIR"
 cd $APP_DIR
