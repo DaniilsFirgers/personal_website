@@ -16,7 +16,9 @@ jobs:
 
       - name: Deploy to Lightsail
         run: |
-          cd $GITHUB_WORKSPACE 
-          bash ./deploy.sh
+          ssh -i ${{ secrets.SSH_PW_PRIVATE_KEY }} daniils@3.65.92.19 'bash -s' <<EOF
+            cd /home/daniils/website
+            ./deploy.sh
+          EOF
         env:
           APP_DIR: /home/daniils/website
