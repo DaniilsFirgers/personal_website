@@ -1,24 +1,21 @@
 name: Website Testing and Deployment
+# on:
+#   push:
+#     branches: [main]
+#   pull_request:
+#     branches: [main]
 
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v2
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Deploy to Lightsail
-        run: |
-          ssh -i ${{ secrets.SSH_PW_PRIVATE_KEY }} daniils@3.65.92.19 'bash -s' <<EOF
-            cd /home/daniils/website
-            ./deploy.sh
-          EOF
-        env:
-          APP_DIR: /home/daniils/website
+#       - name: Deploy to Lightsail
+#         run: |
+#           cd $GITHUB_WORKSPACE
+#           ./deploy-script.sh
+#         env:
+#           APP_DIR: /home/daniils/website
