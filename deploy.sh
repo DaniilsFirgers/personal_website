@@ -25,6 +25,6 @@ sudo cp -r dist/* /var/www/firger.net
 
 # Restart Nginx to apply changes
 echo "ℹ️ Restarting Nginx to apply changes"
-sudo service nginx restart
+sudo nginx -s reload
 
 echo "✅ Deployment completed successfully!"
