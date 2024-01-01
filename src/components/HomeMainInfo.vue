@@ -11,7 +11,7 @@
       <div class="flex flex-col gap-6 w-1/3 justify-between">
         <h1 class="grow font-bold text-7xl">Hello</h1>
         <div>
-          <h2 class="font-semibold text-xl">A bit about me</h2>
+          <h2 class="font-semibold text-xl">A bit about me TEST TEST</h2>
           <p>
             I am a software developer based in Riga with interest in both
             Frontend and Backend technologies.
