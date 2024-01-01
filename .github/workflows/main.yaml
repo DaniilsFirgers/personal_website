@@ -5,17 +5,33 @@ name: Website Testing and Deployment
 #   pull_request:
 #     branches: [main]
 
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - name: Checkout Repository
-#         uses: actions/checkout@v2
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-#       - name: Deploy to Lightsail
-#         run: |
-#           cd $GITHUB_WORKSPACE
-#           ./deploy-script.sh
-#         env:
-#           APP_DIR: /home/daniils/website
+      - name: Install Dependencies and Build
+        run: |
+          npm install
+          npm run build
+
+      - name: Copy Files to Lightsail
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.PW_LIGHTSAIL_IP }}
+          username: ${{ secrets.PW_LIGHTSAIL_USERNAME }}
+          key: ${{ secrets.SSH_PW_PRIVATE_KEY }}
+          script: |
+            sudo -u daniils scp -i ${{ secrets.SSH_PRIVATE_KEY }} "dist/*" daniils@localhost:/var/www/firget.net
+
+      # - name: SSH into Lightsail and Restart Nginx
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.PW_LIGHTSAIL_IP }}
+      #     username: ${{ secrets.PW_LIGHTSAIL_USERNAME }}
+      #     key: ${{ secrets.SSH_PW_PRIVATE_KEY }}
+      #     script: |
+      #       sudo service nginx restart
