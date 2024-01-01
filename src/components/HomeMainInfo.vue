@@ -1,7 +1,7 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div class="flex h-full items-center">
+  <div class="flex h-full items-cenPter">
     <div class="flex gap-5 justify-center items-center h-fit">
       <img
         src="/src/assets/me.jpg"
@@ -11,7 +11,9 @@
       <div class="flex flex-col gap-6 w-1/3 justify-between">
         <h1 class="grow font-bold text-7xl">Hello</h1>
         <div>
-          <h2 class="font-semibold text-xl">A bit about me TEST TEST</h2>
+          <h2 class="font-semibold text-xl">
+            A bit about mefsdfsd TEST TEST aaaa
+          </h2>
           <p>
             I am a software developer based in Riga with interest in both
             Frontend and Backend technologies.
