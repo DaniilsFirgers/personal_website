@@ -2,7 +2,21 @@ name: Website Testing and Deployment
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Deploy to Lightsail
+        run: |
+          cd $GITHUB_WORKSPACE 
+          ./deploy.sh
+        env:
+          APP_DIR: /home/daniils/website
