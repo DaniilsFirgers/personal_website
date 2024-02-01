@@ -15,7 +15,6 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
     steps:
       - name: Git clone https://github.com/DaniilsFirgers/personal_website.git
         uses: actions/checkout@v2

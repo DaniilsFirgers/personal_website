@@ -11,7 +11,7 @@ import { defineProps, ref, PropType } from "vue";
           <router-link to="/about">About me</router-link>
         </div>
         <div class="">
-          <router-link to="/projects">Projects</router-link>
+          <router-link to="/projects">Projectsa</router-link>
         </div>
       </div>
     </div>
