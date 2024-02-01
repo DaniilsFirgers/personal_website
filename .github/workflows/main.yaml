@@ -1,7 +1,7 @@
 name: Website Deployment
 
 env:
-  DEPLOY_PACKAGE_NAME_FILE: "${{ github.sha }}.zip"
+  DEPLOY_PACKAGE_NAME_FILE: "production.zip"
   DEPLOY_PACKAGE_NAME: "${{ github.sha }}"
 
 on:
