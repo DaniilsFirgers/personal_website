@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Git clone https://github.com/yorgit.git
+      - name: Git clone https://github.com/DaniilsFirgers/personal_website.git
         uses: actions/checkout@v2
 
       - name: Install And Build Web app
