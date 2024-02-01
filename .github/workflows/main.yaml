@@ -1,4 +1,9 @@
-name: Website Testing and Deployment
+name: Website Deployment
+
+env:
+  DEPLOY_PACKAGE_NAME_FILE: "${{ github.sha }}.zip"
+  DEPLOY_PACKAGE_NAME: "${{ github.sha }}"
+
 on:
   push:
     branches: [main]
@@ -6,32 +11,47 @@ on:
     branches: [main]
 
 jobs:
-  deploy:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Git clone https://github.com/yorgit.git
         uses: actions/checkout@v2
 
-      - name: Install Dependencies and Build
-        run: |
-          npm install
-          npm run build
+      - name: Install And Build Web app
+        run: yarn install && yarn build
 
-      - name: Copy Files to Lightsail
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.PW_LIGHTSAIL_IP }}
-          username: ${{ secrets.PW_LIGHTSAIL_USERNAME }}
-          key: ${{ secrets.SSH_PW_PRIVATE_KEY }}
-          script: |
-            sudo -u daniils scp -i ${{ secrets.SSH_PRIVATE_KEY }} "dist/*" daniils@localhost:/var/www/firget.net
+      - name: Create zip deployment package
+        run: zip -r ${{ env.DEPLOY_PACKAGE_NAME_FILE }} ./dist/ -x *.git*
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
 
-      # - name: SSH into Lightsail and Restart Nginx
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.PW_LIGHTSAIL_IP }}
-      #     username: ${{ secrets.PW_LIGHTSAIL_USERNAME }}
-      #     key: ${{ secrets.SSH_PW_PRIVATE_KEY }}
-      #     script: |
-      #       sudo service nginx restart
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v2
+
+#       - name: Install Dependencies and Build
+#         run: |
+#           npm install
+#           npm run build
+
+#       - name: Copy Files to Lightsail
+#         uses: appleboy/scp-action@master
+#         with:
+#           host: ${{ secrets.PW_LIGHTSAIL_IP }}
+#           username: ${{ secrets.PW_LIGHTSAIL_USERNAME }}
+#           key: ${{ secrets.SSH_PW_PRIVATE_KEY }}
+#           script: |
+#             sudo -u daniils scp -i ${{ secrets.SSH_PRIVATE_KEY }} "dist/*" daniils@localhost:/var/www/firget.net
+
+#       # - name: SSH into Lightsail and Restart Nginx
+#       #   uses: appleboy/ssh-action@master
+#       #   with:
+#       #     host: ${{ secrets.PW_LIGHTSAIL_IP }}
+#       #     username: ${{ secrets.PW_LIGHTSAIL_USERNAME }}
+#       #     key: ${{ secrets.SSH_PW_PRIVATE_KEY }}
+#       #     script: |
+#       #       sudo service nginx restart
