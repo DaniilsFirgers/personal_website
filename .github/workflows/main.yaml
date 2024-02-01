@@ -48,7 +48,6 @@ jobs:
           port: 22
           script: |
             unzip -q -o /home/${{ secrets.PW_LIGHTSAIL_USERNAME  }}/${{ env.DEPLOY_PACKAGE_NAME_FILE }} -d .
-            sudo systemctl restart nginx
 
 # jobs:
 #   deploy:
