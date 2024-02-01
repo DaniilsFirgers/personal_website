@@ -47,7 +47,7 @@ jobs:
           passphrase: ""
           port: 22
           script: |
-            unzip -q -o /home/${{ secrets.LIGTHSAIL_USERNAME }}/${{ env.DEPLOY_PACKAGE_NAME_FILE }} -d .
+            unzip -q -o /home/${{ secrets.PW_LIGHTSAIL_USERNAME  }}/${{ env.DEPLOY_PACKAGE_NAME_FILE }} -d .
 
 # jobs:
 #   deploy:
