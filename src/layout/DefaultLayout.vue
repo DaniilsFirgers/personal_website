@@ -3,8 +3,7 @@ import Header from "../components/Header.vue";
 </script>
 
 <template>
-  <div class="flex flex-col items-center bg-gray-200 h-screen w-screen">
-    <Header />
+  <div class="bg-gray-200 w-full">
     <slot />
   </div>
 </template>

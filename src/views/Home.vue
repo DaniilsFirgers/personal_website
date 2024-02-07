@@ -4,7 +4,7 @@ import HomeMainInfoVue from "../components/HomeMainInfo.vue";
 </script>
 
 <template>
-  <LayoutDefault>
-    <HomeMainInfoVue></HomeMainInfoVue>
-  </LayoutDefault>
+  <!-- <LayoutDefault> -->
+  <HomeMainInfoVue></HomeMainInfoVue>
+  <!-- </LayoutDefault> -->
 </template>
