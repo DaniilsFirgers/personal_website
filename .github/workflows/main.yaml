@@ -5,6 +5,7 @@ env:
   DEPLOY_PACKAGE_NAME: "${{ github.sha }}"
 
 on:
+<<<<<<< HEAD
   push:
     branches: [main]
   pull_request:
@@ -46,3 +47,7 @@ jobs:
           port: 22
           script: |
             unzip -q -o /home/${{ secrets.PW_LIGHTSAIL_USERNAME  }}/${{ env.DEPLOY_PACKAGE_NAME_FILE }} -d .
+=======
+  pull_request:
+    branches: [main]
+>>>>>>> 0e5c3ab90b0ae227169dbfc2f4b2c06521d69935
