@@ -4,24 +4,44 @@ import { defineProps } from "vue";
 const props = defineProps({
   url: String,
   pageName: String,
+  planetColor: String,
+  shadowColor: String,
+  fitPlanetName: String,
 });
 </script>
 
 <template>
   <div class="planet-holder">
-    <div class="planet">
-      <a href="/" class="page-name">{{ pageName }}</a>
+    <div class="planet" :style="{ '--shadow-color': shadowColor }">
+      <a href="/" :style="{ '--name-fit': fitPlanetName }" class="page-name">{{
+        pageName
+      }}</a>
       <div class="crater"></div>
       <div class="crater"></div>
       <div class="crater"></div>
-      <div class="surface"></div>
-    </div>
 
+      <div class="surface" :style="{ backgroundColor: planetColor }"></div>
+    </div>
+    <div class="ring"></div>
     <div class="shadow"></div>
   </div>
 </template>
 
 <style>
+.ring {
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  transform: translate(-15%, -50%) rotate(-40deg);
+  border: 5px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  width: 220px;
+  height: 20px;
+  z-index: 3;
+  clip-path: polygon(100% 0%, 110% 100%, 0% 110%, -10% 28%, 75% 64%);
+  transition: transform 0.4s ease-in, rotate 0.4s ease;
+}
+
 .planet {
   box-sizing: border-box;
   position: relative;
@@ -41,19 +61,22 @@ const props = defineProps({
   right: 30%;
   box-sizing: border-box;
   border: 30px solid rgba(0, 0, 0, 0.15);
-  background: #ff5f40;
   z-index: 1;
 }
 .planet:hover {
-  box-shadow: 0px 0px 30px rgba(143, 13, 78, 0.5); /* Adjust the shadow properties as needed */
+  box-shadow: 0px 0px 30px var(--shadow-color); /* Adjust the shadow properties as needed */
 }
 
 .planet:hover {
-  transform: translate(0, -15px);
+  transform: translate(0, -15%);
 }
 .planet:hover + .shadow {
   width: 80px;
-  background: rgba(87, 86, 86, 0.2);
+  background: rgba(34, 34, 34, 0.2);
+}
+.planet:hover + .ring {
+  left: 5%;
+  transform: translate(-15%, -170%) rotate(0deg);
 }
 
 div.crater:nth-child(n + 2):nth-child(-n + 4) {
@@ -86,8 +109,6 @@ div.crater:nth-child(4) {
 
 .planet-holder {
   position: relative;
-  top: 100px;
-  left: 100px;
   width: 160px;
 }
 
@@ -106,13 +127,17 @@ div.crater:nth-child(4) {
 
 .page-name {
   position: absolute;
-  transform: translate(25%, 170%);
-  opacity: 0.7;
-  z-index: 4;
+  width: var(--name-fit);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.85;
+  z-index: 5;
   text-decoration: none;
+  text-align: center;
   color: #fff;
   font-size: 1.5rem;
   font-weight: bold;
-  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
 }
 </style>
