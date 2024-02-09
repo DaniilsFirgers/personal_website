@@ -11,18 +11,23 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="planet-holder">
-    <div class="planet" :style="{ '--shadow-color': shadowColor }">
-      <a href="/" :style="{ '--name-fit': fitPlanetName }" class="page-name">{{
-        pageName
-      }}</a>
-      <div class="crater"></div>
-      <div class="crater"></div>
-      <div class="crater"></div>
+  <div>
+    <div class="planet-holder">
+      <div class="planet" :style="{ '--shadow-color': shadowColor }">
+        <a
+          href="/"
+          :style="{ '--name-fit': fitPlanetName }"
+          class="page-name"
+          >{{ pageName }}</a
+        >
+        <div class="crater"></div>
+        <div class="crater"></div>
+        <div class="crater"></div>
 
-      <div class="surface" :style="{ backgroundColor: planetColor }"></div>
+        <div class="surface" :style="{ backgroundColor: planetColor }"></div>
+      </div>
+      <div class="ring"></div>
     </div>
-    <div class="ring"></div>
     <div class="shadow"></div>
   </div>
 </template>
@@ -32,7 +37,7 @@ const props = defineProps({
   position: absolute;
   top: 50%;
   left: 5%;
-  transform: translate(-15%, -50%) rotate(-40deg);
+  transform: translate(-15%, -50%) rotate(-30deg);
   border: 5px solid rgba(255, 255, 255, 0.7);
   border-radius: 50%;
   width: 220px;
@@ -50,7 +55,6 @@ const props = defineProps({
   width: 160px;
   overflow: hidden;
   z-index: 2;
-  transition: transform 0.4s ease-in;
 }
 .surface {
   position: relative;
@@ -63,20 +67,18 @@ const props = defineProps({
   border: 30px solid rgba(0, 0, 0, 0.15);
   z-index: 1;
 }
-.planet:hover {
+.planet-holder:hover {
   box-shadow: 0px 0px 30px var(--shadow-color); /* Adjust the shadow properties as needed */
-}
-
-.planet:hover {
   transform: translate(0, -15%);
 }
-.planet:hover + .shadow {
+
+.planet-holder:hover + .shadow {
   width: 80px;
   background: rgba(34, 34, 34, 0.2);
 }
-.planet:hover + .ring {
+.planet-holder:hover > .ring {
   left: 5%;
-  transform: translate(-15%, -170%) rotate(0deg);
+  transform: translate(-15%, -10%) rotate(0deg);
 }
 
 div.crater:nth-child(n + 2):nth-child(-n + 4) {
@@ -110,6 +112,7 @@ div.crater:nth-child(4) {
 .planet-holder {
   position: relative;
   width: 160px;
+  transition: transform 0.4s ease-in;
 }
 
 .shadow {
