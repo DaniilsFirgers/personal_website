@@ -14,19 +14,15 @@ const props = defineProps({
   <div>
     <div class="planet-holder">
       <div class="planet" :style="{ '--shadow-color': shadowColor }">
-        <a
-          href="/"
-          :style="{ '--name-fit': fitPlanetName }"
-          class="page-name"
-          >{{ pageName }}</a
-        >
         <div class="crater"></div>
         <div class="crater"></div>
         <div class="crater"></div>
-
         <div class="surface" :style="{ backgroundColor: planetColor }"></div>
       </div>
       <div class="ring"></div>
+      <a href="/" :style="{ '--name-fit': fitPlanetName }" class="page-name">{{
+        pageName
+      }}</a>
     </div>
     <div class="shadow"></div>
   </div>
@@ -81,31 +77,31 @@ const props = defineProps({
   transform: translate(-15%, -10%) rotate(0deg);
 }
 
-div.crater:nth-child(n + 2):nth-child(-n + 4) {
+div.crater:nth-child(-n + 3) {
   position: absolute;
   border-radius: 100%;
   background: rgba(0, 0, 0, 0.15);
   box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.2);
   z-index: 3;
 }
-div.crater:nth-child(2) {
+div.crater:nth-child(1) {
   height: 20px;
   width: 20px;
   top: 32%;
   left: 17%;
 }
-div.crater:nth-child(3) {
+div.crater:nth-child(2) {
   height: 10px;
   width: 10px;
   top: 26%;
   left: 55%;
   box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.2);
 }
-div.crater:nth-child(4) {
+div.crater:nth-child(3) {
   height: 10px;
   width: 10px;
-  top: 60%;
-  left: 40%;
+  top: 65%;
+  left: 65%;
   box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -138,9 +134,10 @@ div.crater:nth-child(4) {
   z-index: 5;
   text-decoration: none;
   text-align: center;
-  color: #fff;
+  color: #f3eaea;
   font-size: 1.5rem;
   font-weight: bold;
-  text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 0 2px #383838, 0 0 5px #040427;
+  font-family: "Times New Roman", Times, serif;
 }
 </style>

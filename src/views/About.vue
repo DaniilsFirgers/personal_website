@@ -3,7 +3,5 @@ import LayoutDefault from "../layout/DefaultLayout.vue";
 </script>
 
 <template>
-  <LayoutDefault>
-    <div>About page</div>
-  </LayoutDefault>
+  <div>About page</div>
 </template>
