@@ -69,13 +69,16 @@ function moveSpaceShip(
   spaceship.style.transition = "transform 1.5s ease";
   if (leave) {
     spaceship.style.transform = `translate(${targetX}px, ${targetY - 50}px)`;
+    lastSpaceShipPosition = { x: targetX, y: targetY - 50 };
     return;
   }
   spaceship.style.transform = `translate(${targetX}px, ${targetY - 100}px)`;
+  lastSpaceShipPosition = { x: targetX, y: targetY - 100 };
 }
 
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D | null;
+let lastSpaceShipPosition = { x: 0, y: 0 };
 const spaceshipComponentContent = ref();
 
 function drawCanvas() {
@@ -109,12 +112,21 @@ function drawStars() {
   }
 }
 
-function handleResize() {
+function handleCanvasResize() {
   if (canvas) {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     drawCanvas();
   }
+}
+
+function handleSpaceShipResize() {
+  moveSpaceShip(lastSpaceShipPosition.x, lastSpaceShipPosition.y);
+}
+
+function handleResize() {
+  handleCanvasResize();
+  handleSpaceShipResize();
 }
 
 function random(min: number, max: number) {
