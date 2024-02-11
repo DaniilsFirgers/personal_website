@@ -1,42 +1,85 @@
 <template>
-  <!-- <div class="meteor-sky"> -->
-  <canvas id="canvas"></canvas>
+  <canvas id="canvas"> </canvas>
   <div class="planets-holder">
-    <Meteorite
-      :url="'/'"
-      :page-name="'About me'"
-      :planet-color="'#A95C68'"
-      :shadow-color="'#DB2C64'"
-      :fit-planet-name="'max-content'"
-    />
-    <Meteorite
-      :url="'/'"
-      :page-name="'Projects'"
-      :planet-color="'#A9A9A9'"
-      :shadow-color="'#D3CD65'"
-      :fit-planet-name="'max-content'"
-    />
-    <Meteorite
-      :url="'/'"
-      :page-name="'Resume'"
-      :planet-color="'#6F8FAF'"
-      :shadow-color="'#6495ED'"
-      :fit-planet-name="'max-content'"
+    <Planet
+      v-for="(planet, index) in planets"
+      :key="index"
+      :url="planet.url"
+      :page-name="planet.pageName"
+      :planet-color="planet.planetColor"
+      :shadow-color="planet.shadowColor"
+      :fit-planet-name="planet.fitPlanetName"
+      @mouseenter="(pageName: HTMLElement) => handleOnMouseEnter(pageName)"
+      @mouseleave="(pageName: HTMLElement) => handleOnMouseLeave(pageName)"
     />
   </div>
-  <!-- </div> -->
+  <Spaceship ref="spaceshipComponentContent" />
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted } from "vue";
-import Meteorite from "./Meteorite.vue";
+import { onBeforeUnmount, onMounted, ref } from "vue";
+import Planet from "./Planet.vue";
+import Spaceship from "./Spaceship.vue";
+
+const planets = ref([
+  {
+    url: "/",
+    pageName: "About me",
+    planetColor: "#A95C68",
+    shadowColor: "#DB2C64",
+    fitPlanetName: "max-content",
+  },
+  {
+    url: "/",
+    pageName: "Projects",
+    planetColor: "#A9A9A9",
+    shadowColor: "#D3CD65",
+    fitPlanetName: "max-content",
+  },
+  {
+    url: "/",
+    pageName: "Resume",
+    planetColor: "#6F8FAF",
+    shadowColor: "#6495ED",
+    fitPlanetName: "max-content",
+  },
+]);
+
+function handleOnMouseEnter(event: HTMLElement) {
+  const planetPosition = event.getBoundingClientRect();
+  console.log(planetPosition);
+  moveSpaceShip(planetPosition.left, planetPosition.top);
+}
+
+function handleOnMouseLeave(event: HTMLElement) {
+  const planetPosition = event.getBoundingClientRect();
+  moveSpaceShip(planetPosition.left, planetPosition.top, true);
+}
+
+function moveSpaceShip(
+  targetX: number,
+  targetY: number,
+  leave: boolean = false
+) {
+  const spaceship = spaceshipComponentContent.value.myRef;
+  if (!spaceship) {
+    console.error("Spaceship element is not yet available");
+    return;
+  }
+  spaceship.style.transition = "transform 1.5s ease";
+  if (leave) {
+    spaceship.style.transform = `translate(${targetX}px, ${targetY - 50}px)`;
+    return;
+  }
+  spaceship.style.transform = `translate(${targetX}px, ${targetY - 100}px)`;
+}
 
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D | null;
+const spaceshipComponentContent = ref();
 
 function drawCanvas() {
   canvas = document.querySelector("#canvas") as HTMLCanvasElement;
-  console.log(canvas);
   if (!canvas) return;
   ctx = canvas.getContext("2d");
 
@@ -60,7 +103,6 @@ function drawStars() {
 
     //Add stars
     if (!ctx) return;
-    console.log(ctx);
     ctx.fillStyle = "#ffffff";
     ctx.globalAlpha = alpha;
     ctx.fillRect(xPos, yPos, size, size);

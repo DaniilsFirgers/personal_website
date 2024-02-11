@@ -1,6 +1,15 @@
 <script lang="ts" setup>
-import { defineProps } from "vue";
+import { defineProps, ref } from "vue";
 
+const planetRef = ref<HTMLElement | null>(null);
+
+const emit = defineEmits(["mouseenter", "mouseleave"]);
+function handleOnMouseEnter() {
+  emit("mouseenter", planetRef.value);
+}
+function handleOnMouseLeave() {
+  emit("mouseleave", planetRef.value);
+}
 const props = defineProps({
   url: String,
   pageName: String,
@@ -12,7 +21,12 @@ const props = defineProps({
 
 <template>
   <div>
-    <div class="planet-holder">
+    <div
+      class="planet-holder"
+      ref="planetRef"
+      @mouseenter="handleOnMouseEnter"
+      @mouseleave="handleOnMouseLeave"
+    >
       <div class="planet" :style="{ '--shadow-color': shadowColor }">
         <div class="crater"></div>
         <div class="crater"></div>
