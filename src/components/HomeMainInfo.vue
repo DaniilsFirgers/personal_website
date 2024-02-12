@@ -3,14 +3,15 @@
   <div class="planets-holder">
     <Planet
       v-for="(planet, index) in planets"
+      ref="planet.planetRef"
       :key="index"
       :url="planet.url"
       :page-name="planet.pageName"
       :planet-color="planet.planetColor"
       :shadow-color="planet.shadowColor"
       :fit-planet-name="planet.fitPlanetName"
-      @mouseenter="(pageName: HTMLElement) => handleOnMouseEnter(pageName)"
-      @mouseleave="(pageName: HTMLElement) => handleOnMouseLeave(pageName)"
+      @mouseenter="(pageName: HTMLElement) => handleDebounceLandToPlanet(pageName)"
+      @mouseleave="(pageName: HTMLElement) => handleDebounceReturnToSpace()"
     />
   </div>
   <Spaceship ref="spaceshipComponentContent" />
@@ -20,6 +21,7 @@
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import Planet from "./Planet.vue";
 import Spaceship from "./Spaceship.vue";
+import { debounce } from "../utils";
 
 const planets = ref([
   {
@@ -28,6 +30,7 @@ const planets = ref([
     planetColor: "#A95C68",
     shadowColor: "#DB2C64",
     fitPlanetName: "max-content",
+    planetRef: ref(),
   },
   {
     url: "/",
@@ -35,6 +38,7 @@ const planets = ref([
     planetColor: "#A9A9A9",
     shadowColor: "#D3CD65",
     fitPlanetName: "max-content",
+    planetRef: ref(),
   },
   {
     url: "/",
@@ -42,21 +46,17 @@ const planets = ref([
     planetColor: "#6F8FAF",
     shadowColor: "#6495ED",
     fitPlanetName: "max-content",
+    planetRef: ref(),
   },
 ]);
 
 function handleOnMouseEnter(event: HTMLElement) {
   const planetPosition = event.getBoundingClientRect();
   console.log(planetPosition);
-  moveSpaceShip(planetPosition.left, planetPosition.top);
+  landSpaceShipOnThePlanet(planetPosition.left, planetPosition.top);
 }
 
-function handleOnMouseLeave(event: HTMLElement) {
-  const planetPosition = event.getBoundingClientRect();
-  moveSpaceShip(planetPosition.left, planetPosition.top, true);
-}
-
-function moveSpaceShip(
+function landSpaceShipOnThePlanet(
   targetX: number,
   targetY: number,
   leave: boolean = false
@@ -67,14 +67,24 @@ function moveSpaceShip(
     return;
   }
   spaceship.style.transition = "transform 1.5s ease";
-  if (leave) {
-    spaceship.style.transform = `translate(${targetX}px, ${targetY - 50}px)`;
-    lastSpaceShipPosition = { x: targetX, y: targetY - 50 };
+  spaceship.style.transform = `translate(${targetX}px, ${targetY - 100}px)`;
+  lastSpaceShipPosition = { x: targetX, y: targetY };
+}
+
+function landShipBackToSpace() {
+  const spaceship = spaceshipComponentContent.value.myRef;
+  if (!spaceship) {
+    console.error("Spaceship element is not yet available");
     return;
   }
-  spaceship.style.transform = `translate(${targetX}px, ${targetY - 100}px)`;
-  lastSpaceShipPosition = { x: targetX, y: targetY - 100 };
+  spaceship.style.transition = "transform 1.5s ease";
+  spaceship.style.transform = `translate(${0}px, ${0}px)`;
 }
+const handleDebounceReturnToSpace = debounce(() => landShipBackToSpace(), 200);
+const handleDebounceLandToPlanet = debounce(
+  (event: HTMLElement) => handleOnMouseEnter(event),
+  300
+);
 
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D | null;
@@ -121,7 +131,7 @@ function handleCanvasResize() {
 }
 
 function handleSpaceShipResize() {
-  moveSpaceShip(lastSpaceShipPosition.x, lastSpaceShipPosition.y);
+  landSpaceShipOnThePlanet(lastSpaceShipPosition.x, lastSpaceShipPosition.y);
 }
 
 function handleResize() {

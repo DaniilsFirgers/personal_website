@@ -1,5 +1,7 @@
 <template>
-  <div class="spaceship" ref="myRef"></div>
+  <div class="spaceship" ref="myRef">
+    <div class="window"></div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -13,10 +15,20 @@ defineExpose({
 </script>
 
 <style scoped>
-.spaceship {
+.window {
   position: absolute;
-  width: 50px;
-  height: 50px;
+  width: 10px;
+  height: 10px;
+  background-color: black;
+  transform: translate(15px, 20px);
+  border-radius: 50%;
+}
+.spaceship {
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  position: absolute;
+  width: 40px;
+  height: 70px;
   top: 50px;
   left: 50px;
   background-color: yellow;
