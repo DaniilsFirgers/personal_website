@@ -16,7 +16,6 @@ const props = defineProps({
   fitPlanetName: String,
   planetWidth: String,
 });
-console.log(props);
 </script>
 
 <template>
