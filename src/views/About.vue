@@ -1,15 +1,10 @@
 <script lang="ts" setup>
-import { onMounted } from "vue";
-import LayoutDefault from "../layout/DefaultLayout.vue";
 let dateOfBirth = new Date(1999, 8, 6);
 function calculateAge(dateOfBirth: Date) {
   const diff = Date.now() - dateOfBirth.getTime();
   const ageDate = new Date(diff);
   return Math.abs(ageDate.getUTCFullYear() - 1970);
 }
-onMounted(() => {
-  console.log(calculateAge(dateOfBirth));
-});
 </script>
 
 <template>
