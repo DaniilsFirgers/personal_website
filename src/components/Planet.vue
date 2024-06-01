@@ -1,5 +1,12 @@
 <script lang="ts" setup>
-import { defineProps } from "vue";
+import { defineProps, ref } from "vue";
+
+const planetRef = ref<HTMLElement | null>(null);
+
+const emit = defineEmits(["click"]);
+function handleOnClick() {
+  emit("click", props.url);
+}
 
 const props = defineProps({
   url: String,
@@ -7,22 +14,34 @@ const props = defineProps({
   planetColor: String,
   shadowColor: String,
   fitPlanetName: String,
+  planetWidth: String,
 });
+console.log(props);
 </script>
 
 <template>
   <div>
-    <div class="planet-holder">
-      <div class="planet" :style="{ '--shadow-color': shadowColor }">
+    <div class="planet-holder" ref="planetRef">
+      <div
+        class="planet"
+        :style="{
+          '--shadow-color': shadowColor,
+          '--planet-width': planetWidth,
+        }"
+      >
         <div class="crater"></div>
         <div class="crater"></div>
         <div class="crater"></div>
         <div class="surface" :style="{ backgroundColor: planetColor }"></div>
       </div>
       <div class="ring"></div>
-      <a href="/" :style="{ '--name-fit': fitPlanetName }" class="page-name">{{
-        pageName
-      }}</a>
+      <button
+        :style="{ '--name-fit': fitPlanetName }"
+        class="page-name"
+        @click="handleOnClick"
+      >
+        {{ pageName }}
+      </button>
     </div>
     <div class="shadow"></div>
   </div>
@@ -45,10 +64,11 @@ const props = defineProps({
 
 .planet {
   box-sizing: border-box;
+
   position: relative;
   border-radius: 100%;
-  height: 160px;
-  width: 160px;
+  height: var(--planet-width);
+  width: var(--planet-width);
   overflow: hidden;
   z-index: 2;
 }
