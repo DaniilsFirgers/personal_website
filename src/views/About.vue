@@ -15,7 +15,7 @@ onMounted(() => {
 <template>
   <div class="about">
     <div class="typewriter-holder">
-      <h1 class="typewriter-name">Name: Daniils</h1>
+      <h1 class="typewriter-name">Name: Daniils Firgers</h1>
       <h1 class="typewriter-age">Age: {{ calculateAge(dateOfBirth) }}</h1>
       <h1 class="typewriter-occupation">Occupation: software developer</h1>
     </div>
@@ -44,7 +44,7 @@ onMounted(() => {
 }
 
 .typewriter-name {
-  width: 200px;
+  width: 420px;
   top: 5px;
   border-right: 2px solid rgba(17, 17, 17, 0.9);
 }
@@ -76,7 +76,7 @@ onMounted(() => {
     width: 0px;
   }
   to {
-    width: 250px;
+    width: 420px;
   }
 }
 
