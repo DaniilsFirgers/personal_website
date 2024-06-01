@@ -34,7 +34,7 @@ const planets = ref([
     planetRef: ref(),
   },
   {
-    url: "/",
+    url: "/projects",
     pageName: "Projects",
     planetColor: "#A9A9A9",
     shadowColor: "#D3CD65",
@@ -43,7 +43,7 @@ const planets = ref([
     planetRef: ref(),
   },
   {
-    url: "/",
+    url: "/resume",
     pageName: "Resume",
     planetColor: "#6F8FAF",
     shadowColor: "#6495ED",
