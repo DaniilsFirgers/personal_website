@@ -11,6 +11,16 @@ const routes: Array<RouteRecordRaw> = [
     name: "About me",
     component: () => import("../views/About.vue"),
   },
+  {
+    path: "/projects",
+    name: "Projects",
+    component: () => import("../views/Projects.vue"),
+  },
+  {
+    path: "/resume",
+    name: "Resume",
+    component: () => import("../views/Resume.vue"),
+  },
 ];
 
 export default routes;
