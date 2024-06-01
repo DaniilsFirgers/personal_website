@@ -21,6 +21,7 @@
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import Planet from "./Planet.vue";
 import router from "../router";
+import { version } from "../../package.json";
 
 const planets = ref([
   {
@@ -96,7 +97,6 @@ function handleCanvasResize() {
 }
 
 function handlePlanetClick(url: string) {
-  console.log("Planet clicked", url);
   overlayActive.value = !overlayActive.value;
   setTimeout(() => {
     router.push(url);
@@ -112,6 +112,7 @@ function random(min: number, max: number) {
 }
 
 onMounted(() => {
+  console.info(`Version: ${version}`);
   drawCanvas();
   window.addEventListener("resize", handleResize);
 });
