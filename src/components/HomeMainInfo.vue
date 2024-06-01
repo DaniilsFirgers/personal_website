@@ -1,6 +1,6 @@
 <template>
   <canvas id="canvas"> </canvas>
-  <div class="planets-holder">
+  <div class="planets-holder" :class="{ transparent: overlayActive }">
     <Planet
       v-for="(planet, index) in planets"
       ref="planet.planetRef"
@@ -10,26 +10,26 @@
       :planet-color="planet.planetColor"
       :shadow-color="planet.shadowColor"
       :fit-planet-name="planet.fitPlanetName"
-      @mouseenter="(pageName: HTMLElement) => handleDebounceLandToPlanet(pageName)"
-      @mouseleave="(pageName: HTMLElement) => handleDebounceReturnToSpace()"
+      :planet-width="planet.planetWidth"
+      @click="(url) => handlePlanetClick(url)"
     />
   </div>
-  <Spaceship ref="spaceshipComponentContent" />
+  <div class="overlay" :class="{ active: overlayActive }"></div>
 </template>
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import Planet from "./Planet.vue";
-import Spaceship from "./Spaceship.vue";
-import { debounce } from "../utils";
+import router from "../router";
 
 const planets = ref([
   {
-    url: "/",
+    url: "/about",
     pageName: "About me",
     planetColor: "#A95C68",
     shadowColor: "#DB2C64",
     fitPlanetName: "max-content",
+    planetWidth: "160px",
     planetRef: ref(),
   },
   {
@@ -38,6 +38,7 @@ const planets = ref([
     planetColor: "#A9A9A9",
     shadowColor: "#D3CD65",
     fitPlanetName: "max-content",
+    planetWidth: "160px",
     planetRef: ref(),
   },
   {
@@ -46,50 +47,14 @@ const planets = ref([
     planetColor: "#6F8FAF",
     shadowColor: "#6495ED",
     fitPlanetName: "max-content",
+    planetWidth: "160px",
     planetRef: ref(),
   },
 ]);
 
-function handleOnMouseEnter(event: HTMLElement) {
-  const planetPosition = event.getBoundingClientRect();
-  console.log(planetPosition);
-  landSpaceShipOnThePlanet(planetPosition.left, planetPosition.top);
-}
-
-function landSpaceShipOnThePlanet(
-  targetX: number,
-  targetY: number,
-  leave: boolean = false
-) {
-  const spaceship = spaceshipComponentContent.value.myRef;
-  if (!spaceship) {
-    console.error("Spaceship element is not yet available");
-    return;
-  }
-  spaceship.style.transition = "transform 1.5s ease";
-  spaceship.style.transform = `translate(${targetX}px, ${targetY - 100}px)`;
-  lastSpaceShipPosition = { x: targetX, y: targetY };
-}
-
-function landShipBackToSpace() {
-  const spaceship = spaceshipComponentContent.value.myRef;
-  if (!spaceship) {
-    console.error("Spaceship element is not yet available");
-    return;
-  }
-  spaceship.style.transition = "transform 1.5s ease";
-  spaceship.style.transform = `translate(${0}px, ${0}px)`;
-}
-const handleDebounceReturnToSpace = debounce(() => landShipBackToSpace(), 200);
-const handleDebounceLandToPlanet = debounce(
-  (event: HTMLElement) => handleOnMouseEnter(event),
-  300
-);
-
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D | null;
-let lastSpaceShipPosition = { x: 0, y: 0 };
-const spaceshipComponentContent = ref();
+let overlayActive = ref(false);
 
 function drawCanvas() {
   canvas = document.querySelector("#canvas") as HTMLCanvasElement;
@@ -130,13 +95,16 @@ function handleCanvasResize() {
   }
 }
 
-function handleSpaceShipResize() {
-  landSpaceShipOnThePlanet(lastSpaceShipPosition.x, lastSpaceShipPosition.y);
+function handlePlanetClick(url: string) {
+  console.log("Planet clicked", url);
+  overlayActive.value = !overlayActive.value;
+  setTimeout(() => {
+    router.push(url);
+  }, 700);
 }
 
 function handleResize() {
   handleCanvasResize();
-  handleSpaceShipResize();
 }
 
 function random(min: number, max: number) {
@@ -154,6 +122,23 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0); /* Initially transparent */
+  transition: background-color 0.6s ease; /* Transition effect */
+  z-index: 999; /* Ensure the overlay appears on top of other content */
+  pointer-events: none; /* Allow click events to pass through initially */
+}
+
+.overlay.active {
+  background-color: rgba(0, 0, 0, 0.8); /* Darken the overlay */
+  pointer-events: auto; /* Enable click events when active */
+}
+
 #canvas {
   width: 100vw;
   height: 100vh;
@@ -172,5 +157,9 @@ onBeforeUnmount(() => {
   transform: translate(-50%, -50%);
   display: flex;
   gap: 80px;
+}
+.planets-holder.transparent {
+  opacity: 0;
+  transition: opacity 0.6s ease; /* Add a transition for smooth effect */
 }
 </style>
