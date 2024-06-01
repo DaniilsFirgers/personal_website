@@ -21,6 +21,10 @@ jobs:
       - name: Install And Build Web app
         run: yarn install && yarn build
 
+      - name: Get Package Version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
+
       - name: Create zip deployment package
         run: zip -r ${{ env.DEPLOY_PACKAGE_NAME_FILE }} ./dist/ -x *.git*
 
@@ -54,16 +58,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.generate_tag.outputs.tag }}
-          release_name: Release ${{ steps.generate_tag.outputs.tag }}
-          body: Release for commit ${{ github.sha }}
+          tag_name: v${{ steps.package-version.outputs.version }}
+          release_name: Release v${{ steps.package-version.outputs.version }}
+          body: Release for version ${{ steps.package-version.outputs.version }} for commit ${{ github.sha }}
           draft: false
           prerelease: false
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}Resource not accessible by integration
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ env.DEPLOY_PACKAGE_NAME_FILE }}
