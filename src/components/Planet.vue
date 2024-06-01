@@ -3,40 +3,45 @@ import { defineProps, ref } from "vue";
 
 const planetRef = ref<HTMLElement | null>(null);
 
-const emit = defineEmits(["mouseenter", "mouseleave"]);
-function handleOnMouseEnter() {
-  emit("mouseenter", planetRef.value);
+const emit = defineEmits(["click"]);
+function handleOnClick() {
+  emit("click", props.url);
 }
-function handleOnMouseLeave() {
-  emit("mouseleave", planetRef.value);
-}
+
 const props = defineProps({
   url: String,
   pageName: String,
   planetColor: String,
   shadowColor: String,
   fitPlanetName: String,
+  planetWidth: String,
 });
+console.log(props);
 </script>
 
 <template>
   <div>
-    <div
-      class="planet-holder"
-      ref="planetRef"
-      @mouseenter="handleOnMouseEnter"
-      @mouseleave="handleOnMouseLeave"
-    >
-      <div class="planet" :style="{ '--shadow-color': shadowColor }">
+    <div class="planet-holder" ref="planetRef">
+      <div
+        class="planet"
+        :style="{
+          '--shadow-color': shadowColor,
+          '--planet-width': planetWidth,
+        }"
+      >
         <div class="crater"></div>
         <div class="crater"></div>
         <div class="crater"></div>
         <div class="surface" :style="{ backgroundColor: planetColor }"></div>
       </div>
       <div class="ring"></div>
-      <a href="/" :style="{ '--name-fit': fitPlanetName }" class="page-name">{{
-        pageName
-      }}</a>
+      <button
+        :style="{ '--name-fit': fitPlanetName }"
+        class="page-name"
+        @click="handleOnClick"
+      >
+        {{ pageName }}
+      </button>
     </div>
     <div class="shadow"></div>
   </div>
@@ -59,10 +64,11 @@ const props = defineProps({
 
 .planet {
   box-sizing: border-box;
+
   position: relative;
   border-radius: 100%;
-  height: 160px;
-  width: 160px;
+  height: var(--planet-width);
+  width: var(--planet-width);
   overflow: hidden;
   z-index: 2;
 }
