@@ -24,8 +24,8 @@ jobs:
       - name: Get Package Version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@v1.3.1
-        with:
-          path: "packages/personal_website"
+      - name: Print Package Version
+        run: echo "Package version is ${{ steps.package-version.outputs.version }}"
 
       - name: Create zip deployment package
         run: zip -r ${{ env.DEPLOY_PACKAGE_NAME_FILE }} ./dist/ -x *.git*
