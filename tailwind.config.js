@@ -1,6 +1,10 @@
 /** @type {import('tailwindcss').Config} */
-export default {
-  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
-
-  plugins: [],
+module.exports = {
+	content: [
+		'./src/**/*.{html,js,svelte,ts}' // Include all relevant file types
+	],
+	theme: {
+		extend: {}
+	},
+	plugins: [require('tailwind-scrollbar')]
 };
