@@ -1,0 +1,21 @@
+[ req ]
+default_bits       = 2048
+default_md         = sha256
+distinguished_name = req_distinguished_name
+req_extensions     = v3_req
+prompt             = no
+
+[ req_distinguished_name ]
+C  = US
+ST = Riga
+L  = Riga
+O  = Pesonal
+OU = None
+CN = firger.local.net
+
+[ v3_req ]
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = firger.local.net
+DNS.2 = www.firger.local.net

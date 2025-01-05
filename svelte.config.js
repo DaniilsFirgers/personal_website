@@ -9,7 +9,7 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
-		adapter: adapter({ pages: 'dist', assets: 'dist', fallback: 'index.html', precompress: true }),
+		adapter: adapter({ fallback: 'index.html', precompress: true }),
 
 		alias: {
 			$stores: path.resolve('./src/stores'),
