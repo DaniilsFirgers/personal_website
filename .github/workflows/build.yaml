@@ -44,7 +44,7 @@ jobs:
           source: ${{ env.DEPLOY_PACKAGE_NAME_FILE }}
           target: '/home/${{ secrets.PW_LIGHTSAIL_USERNAME }}'
 
-      - name: Connect to AWS Lightsail, extract zip and run start-server.sh script
+      - name: Connect to AWS Lightsail, extract zip (delete it then) and run start-server.sh script
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.PW_LIGHTSAIL_IP }}
@@ -55,6 +55,7 @@ jobs:
           port: 22
           script: |
             unzip -q -o /home/${{ secrets.PW_LIGHTSAIL_USERNAME  }}/${{ env.DEPLOY_PACKAGE_NAME_FILE }} -d .
+            rm -f /home/${{ secrets.PW_LIGHTSAIL_USERNAME  }}/${{ env.DEPLOY_PACKAGE_NAME_FILE }}
             /home/${{ secrets.PW_LIGHTSAIL_USERNAME }}/start-server.sh
 
       - name: Create GitHub Release
